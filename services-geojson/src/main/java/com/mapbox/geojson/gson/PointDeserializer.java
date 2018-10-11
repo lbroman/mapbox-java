@@ -55,10 +55,12 @@ public class PointDeserializer implements JsonDeserializer<Point> {
     // Includes altitude
     if (rawCoordinates.size() > 2) {
       double altitude = rawCoordinates.get(2).getAsDouble();
+      // TODO: unshift if converter was applied
       return Point.fromLngLat(longitude, latitude, altitude);
     }
 
     // It doesn't have altitude
+    // TODO: unshift if converter was applied
     return Point.fromLngLat(longitude, latitude);
   }
 }

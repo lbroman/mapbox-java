@@ -15,6 +15,7 @@ import com.google.gson.TypeAdapter;
 import com.mapbox.geojson.gson.BoundingBoxDeserializer;
 import com.mapbox.geojson.gson.BoundingBoxSerializer;
 import com.mapbox.geojson.gson.GeoJsonAdapterFactory;
+import com.mapbox.geojson.shifter.CoordinateShifterManager;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -92,6 +93,11 @@ public abstract class Point implements CoordinateContainer<List<Double>>, Serial
   public static Point fromLngLat(
     @FloatRange(from = MIN_LONGITUDE, to = MAX_LONGITUDE) double longitude,
     @FloatRange(from = MIN_LATITUDE, to = MAX_LATITUDE) double latitude) {
+
+
+    longitude = CoordinateShifterManager.getCoordinateShifter().shiftLon(longitude);
+    latitude = CoordinateShifterManager.getCoordinateShifter().shiftLat(latitude);
+
     List<Double> coordinates = Arrays.asList(longitude, latitude);
     return new AutoValue_Point(TYPE, null, coordinates);
   }
@@ -115,6 +121,10 @@ public abstract class Point implements CoordinateContainer<List<Double>>, Serial
     @FloatRange(from = MIN_LONGITUDE, to = MAX_LONGITUDE) double longitude,
     @FloatRange(from = MIN_LATITUDE, to = MAX_LATITUDE) double latitude,
     @Nullable BoundingBox bbox) {
+
+    longitude = CoordinateShifterManager.getCoordinateShifter().shiftLon(longitude);
+    latitude = CoordinateShifterManager.getCoordinateShifter().shiftLat(latitude);
+
     List<Double> coordinates = Arrays.asList(longitude, latitude);
     return new AutoValue_Point(TYPE, bbox, coordinates);
   }
@@ -139,6 +149,10 @@ public abstract class Point implements CoordinateContainer<List<Double>>, Serial
     @FloatRange(from = MIN_LONGITUDE, to = MAX_LONGITUDE) double longitude,
     @FloatRange(from = MIN_LATITUDE, to = MAX_LATITUDE) double latitude,
     double altitude) {
+
+    longitude = CoordinateShifterManager.getCoordinateShifter().shiftLon(longitude);
+    latitude = CoordinateShifterManager.getCoordinateShifter().shiftLat(latitude);
+
     List<Double> coordinates = Arrays.asList(longitude, latitude, altitude);
     return new AutoValue_Point(TYPE, null, coordinates);
   }
@@ -164,6 +178,10 @@ public abstract class Point implements CoordinateContainer<List<Double>>, Serial
     @FloatRange(from = MIN_LONGITUDE, to = MAX_LONGITUDE) double longitude,
     @FloatRange(from = MIN_LATITUDE, to = MAX_LATITUDE) double latitude,
     double altitude, @Nullable BoundingBox bbox) {
+
+    longitude = CoordinateShifterManager.getCoordinateShifter().shiftLon(longitude);
+    latitude = CoordinateShifterManager.getCoordinateShifter().shiftLat(latitude);
+
     List<Double> coordinates = Arrays.asList(longitude, latitude, altitude);
     return new AutoValue_Point(TYPE, bbox, coordinates);
   }
